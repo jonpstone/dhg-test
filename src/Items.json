@@ -1,0 +1,145 @@
+[
+  {
+    "id": 1,
+    "name": "Mobile Phone",
+    "image": "phone.png",
+    "category": "Electronics",
+    "color": "Black",
+    "rating": 5,
+    "price": 599,
+    "items_left": 200,
+    "description": "This item is so awesome"
+  },
+  {
+    "id": 2,
+    "name": "Computer Monitor",
+    "image": "computer.png",
+    "category": "Electronics",
+    "color": "Black",
+    "rating": 4,
+    "price": 399,
+    "items_left": 200,
+    "description": "This item is so awesome"
+  },
+  {
+    "id": 3,
+    "name": "Book",
+    "image": "book.png",
+    "category": "Books",
+    "color": "Black",
+    "rating": 2,
+    "price": 29.99,
+    "items_left": 1,
+    "description": "This item is so awesome"
+  },
+  {
+    "id": 4,
+    "name": "Book Set",
+    "image": "books.png",
+    "category": "Books",
+    "color": "Black",
+    "rating": 3,
+    "price": 59.99,
+    "items_left": 200,
+    "description": "This item is so awesome"
+  },
+  {
+    "id": 5,
+    "name": "Calculator",
+    "image": "calculator.png",
+    "category": "Electronics",
+    "color": "White",
+    "rating": 1,
+    "price": 99.99,
+    "items_left": 0,
+    "description": "This item is so awesome"
+  },
+  {
+    "id": 6,
+    "name": "Art Palette",
+    "image": "art.png",
+    "category": "School",
+    "color": "Blue",
+    "rating": 4,
+    "price": 8,
+    "items_left": 200,
+    "description": "This item is so awesome"
+  },
+  {
+    "id": 7,
+    "name": "Video Game",
+    "image": "game.png",
+    "category": "Electronics",
+    "color": "Black",
+    "rating": 5,
+    "price": 59.99,
+    "items_left": 200,
+    "description": "This item is so awesome"
+  },
+  {
+    "id": 8,
+    "name": "DVD",
+    "image": "video.png",
+    "category": "Electronics",
+    "color": "Silver",
+    "rating": 2,
+    "price": 12.99,
+    "items_left": 150,
+    "description": "This item is so awesome"
+  },
+  {
+    "id": 9,
+    "name": "Glasses",
+    "image": "glasses.png",
+    "category": "Books;School",
+    "color": "Gray",
+    "rating": 2,
+    "price": 9.99,
+    "items_left": 0,
+    "description": "This item is so awesome"
+  },
+  {
+    "id": 10,
+    "name": "Puzzle",
+    "image": "puzzle.png",
+    "category": "Toy",
+    "color": "Brown",
+    "rating": 3,
+    "price": 4.99,
+    "items_left": 6,
+    "description": "This item is so awesome"
+  },
+  {
+    "id": 11,
+    "name": "Robot",
+    "image": "robot.png",
+    "category": "Electronics;Toys",
+    "color": "Black",
+    "rating": 2,
+    "price": 80,
+    "items_left": 6,
+    "description": "This item is so awesome"
+  },
+  {
+    "id": 12,
+    "name": "Laptop",
+    "image": "laptop.png",
+    "category": "Electronics",
+    "color": "Gray",
+    "rating": 5,
+    "price": 1100,
+    "items_left": 200,
+    "description": "This item is so awesome"
+  },
+  {
+    "id": 13,
+    "name": "Virtual Reality",
+    "image": "vr.png",
+    "category": "Electronics;Toys",
+    "color": "Red",
+    "rating": 4,
+    "price": 599,
+    "items_left": 200,
+    "description": "This item is so awesome"
+  }
+]

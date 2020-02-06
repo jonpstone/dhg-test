@@ -1,26 +1,67 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { Grid, Header, Form } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default class App extends React.Component {
+
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			items: [],
+			filter: [],
+			search: '' // keyword
+		};
+	}
+
+	componentDidMount() {}
+
+	onSearch() {
+		// keyword
+	}
+
+	onFilter() {
+		// filters
+	}
+
+	findFilter() {
+
+	}
+
+	findItem() {
+
+	}
+
+	alreadyIn() {
+
+	}
+
+	clearAll() {
+
+	}
+
+	render() {
+		let items = require('./Items.json')
+
+		return (
+			<Grid celled>
+				<Grid.Row>
+					<Header>
+						Store Page
+					</Header>
+					<Form>
+						<Form.Group>
+							<Form.Input placeholder='Type to search...' />
+							<Form.Button>Search</Form.Button>
+						</Form.Group>
+					</Form>
+				</Grid.Row>
+				<Grid.Row>
+					<Grid.Column>
+						
+					</Grid.Column>
+				</Grid.Row>
+			</Grid>
+		);
+	}
 }
-
-export default App;

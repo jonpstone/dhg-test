@@ -1,0 +1,14 @@
+﻿id,name,image,category,color,rating,price,items_left,description
+1,Mobile Phone,phone.png,Electronics,Black,5,599,200,This item is so awesome
+2,Computer Monitor,computer.png,Electronics,Black,4,399,200,This item is so awesome
+3,Book,book.png,Books,Black,2,29.99,1,This item is so awesome
+4,Book Set,books.png,Books,Black,3,59.99,200,This item is so awesome
+5,Calculator,calculator.png,Electronics,White,1,99.99,0,This item is so awesome
+6,Art Palette,art.png,School,Blue,4,8,200,This item is so awesome
+7,Video Game,game.png,Electronics,Black,5,59.99,200,This item is so awesome
+8,DVD,video.png,Electronics,Silver,2,12.99,150,This item is so awesome
+9,Glasses,glasses.png,Books;School,Gray,2,9.99,0,This item is so awesome
+10,Puzzle,puzzle.png,Toy,Brown,3,4.99,6,This item is so awesome
+11,Robot,robot.png,Electronics;Toys,Black,2,80,6,This item is so awesome
+12,Laptop,laptop.png,Electronics,Gray,5,1100,200,This item is so awesome
+13,Virtual Reality,vr.png,Electronics;Toys,Red,4,599,200,This item is so awesome
