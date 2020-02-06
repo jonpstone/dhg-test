@@ -1,23 +1,35 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { Grid, Segment} from 'semantic-ui-react'
 
-class Search extends Component {
+export default class Search extends React.Component {
 
-  constructor(props) {
-    super(props);
-  }
+	// onSearch() {
 
-  onSearch() {
+	// }
 
-  }
-
-  render() {
-    return (
-      // this.props.items
-      <>
-        
-      </>
-    )
-  }
+	render() {
+		return (
+			<>
+				{
+					this.props.items ?
+						this.props.items.map((item) =>
+							<Grid key='id'>
+								<Grid.Column width={3}>
+									{item.image}
+								</Grid.Column>
+								<Grid.Column width={9}>
+									{item.name}
+									{item.rating}
+									{item.description}
+								</Grid.Column>
+								<Grid.Column width={4}>
+									{item.price}
+									<Segment as='button' content='Add to Cart' />
+								</Grid.Column>
+							</Grid>
+						) : null
+				}
+			</>
+		)
+	}
 }
-
-export default Search;
