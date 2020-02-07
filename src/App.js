@@ -12,10 +12,17 @@ export default class App extends React.Component {
 			items: [],
 			filter: [],
 			search: '',
+			
 		}
 	}
+	
+	// handleChange(e) {
+	// 	const item = e.target.name;
+	// 	const isChecked = e.target.checked;
+	// 	this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
+	//   }
 
-	handleClick = (e, titleClick) => {
+	handleAccordionClick = (e, titleClick) => {
 		const { index } = titleClick
 		const { activeIndex } = this.state
 		const newIndex = activeIndex === index ? -1 : index
@@ -38,8 +45,13 @@ export default class App extends React.Component {
 		
 	}
 
-	findFilter = () => {
+	findFilter = (e, {name}) => {
+		const { filter } = this.state
+		const arrCopy = this.state.filter
 
+		filter.includes(name) ?
+			this.setState({ filter: arrCopy.filter((checkName) => !(checkName === name)) }) :
+			this.setState({ filter: [...filter, name] })
 	}
 
 	findItem() {
@@ -94,13 +106,17 @@ export default class App extends React.Component {
 								<Accordion.Title
 									active={activeIndex === 0}
 									index={0}
-									onClick={this.handleClick}
+									onClick={this.handleAccordionClick}
 								>
 									<Icon name='dropdown' />
 									Category
 								</Accordion.Title>
 								<Accordion.Content active={activeIndex === 0}>
-									<Checkbox name='electronics' label='Electronics' checked={false}/><br/>
+									<Checkbox 
+										name='electronics' 
+										label='Electronics' 
+										onChange={this.findFilter}
+									/><br/>
 									<Checkbox name='books' label='Books' /><br/>
 									<Checkbox name='school' label='School' /><br/>
 									<Checkbox name='toy' label='Toy' />
@@ -109,7 +125,7 @@ export default class App extends React.Component {
 								<Accordion.Title
 									active={activeIndex === 1}
 									index={1}
-									onClick={this.handleClick}
+									onClick={this.handleAccordionClick}
 								>
 									<Icon name='dropdown' />
 									Availability
@@ -124,7 +140,7 @@ export default class App extends React.Component {
 								<Accordion.Title
 									active={activeIndex === 2}
 									index={2}
-									onClick={this.handleClick}
+									onClick={this.handleAccordionClick}
 								>
 									<Icon name='dropdown' />
 									Price
@@ -139,7 +155,7 @@ export default class App extends React.Component {
 								<Accordion.Title
 									active={activeIndex === 3}
 									index={3}
-									onClick={this.handleClick}
+									onClick={this.handleAccordionClick}
 								>
 									<Icon name='dropdown' />
 									Rating
@@ -169,7 +185,6 @@ export default class App extends React.Component {
 								/> 
 							) : "No results found..."
 						}
-						{console.log("ITEMS:", items)}
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
