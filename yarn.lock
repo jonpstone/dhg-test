@@ -2,6 +2,13 @@
 # yarn lockfile v1
 
 
+"@akihirotakamura/formsy-semantic-ui-react@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@akihirotakamura/formsy-semantic-ui-react/-/formsy-semantic-ui-react-0.4.1.tgz#298194549bd507e531e9bebd271c38e915f12f0b"
+  integrity sha512-af0pRO8NcPKXSTsqwRZBlzpn65LuXz+ZVlRnLdovMXM3E9gN1jQWXNCP9zjfp3BXhRIUsMIYHd44+pk2L0DTuA==
+  dependencies:
+    prop-types "^15.6.0"
+
 "@babel/code-frame@7.8.3", "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.8.3":
   version "7.8.3"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.8.3.tgz#33e25903d7481181534e12ec0a25f16b6fcf419e"
@@ -4421,13 +4428,6 @@ form-data@~2.3.2:
     asynckit "^0.4.0"
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
-
-formsy-semantic-ui-react@^0.3.5:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/formsy-semantic-ui-react/-/formsy-semantic-ui-react-0.3.5.tgz#f2696e1817b99042ffda5390e8b6b33c8e5b7324"
-  integrity sha512-H1h3ZB68U1bPDTUFe2VdSnByrDmOBrD1DWdCnmxgaUbO4t1Sge8Xxdi6h+huxMgAaiLAYBVxU+626hrEA24vKQ==
-  dependencies:
-    prop-types "^15.6.0"
 
 forwarded@~0.1.2:
   version "0.1.2"

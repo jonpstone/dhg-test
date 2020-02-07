@@ -1,7 +1,9 @@
 import React from 'react'
-import { Grid, Header, Form, Checkbox, Button, Accordion, Icon } from 'semantic-ui-react'
+import { Form, Grid, Header, Accordion, Icon } from 'semantic-ui-react'
 import ItemInfo from './components/ItemInfo'
 import 'semantic-ui-css/semantic.min.css'
+
+const itemsSrc = require('./Items.json')
 
 export default class App extends React.Component {
 
@@ -12,15 +14,9 @@ export default class App extends React.Component {
 			items: [],
 			filter: [],
 			search: '',
-			
+			unCheckAll: false
 		}
 	}
-	
-	// handleChange(e) {
-	// 	const item = e.target.name;
-	// 	const isChecked = e.target.checked;
-	// 	this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
-	//   }
 
 	handleAccordionClick = (e, titleClick) => {
 		const { activeIndex } = this.state
@@ -30,8 +26,6 @@ export default class App extends React.Component {
 	}
 
 	componentDidMount() {
-		const itemsSrc = require('./Items.json')
-
 		this.setState({ items: [...itemsSrc] })
 	}
 
@@ -41,12 +35,12 @@ export default class App extends React.Component {
 
 	onFilter = (...args) => {
 		this.setState({ items: [] })
-		if (args.includes('electronics', 'book', 'school', 'toy')) {
-			if ('electronics') {
+		// if (args.includes('electronics', 'book', 'school', 'toy')) {
+		// 	if ('electronics') {
 
-			}
-		}
-		console.log(args)
+		// 	}
+		// }
+		console.log('ARGS', args)
 	}
 
 	findFilter = (e, {name}) => {
@@ -66,13 +60,18 @@ export default class App extends React.Component {
 
 	}
 
-	clearAll = () => {
-		this.form.reset()
-		this.setState({ items: [] }) 
+	clearAll = e => {
+		this.setState({ unCheckAll: true })
+		this.setState({ items: [...itemsSrc] })
 	}
 
+	unCheck = () => {
+		// const checkboxElements = [...document.getElementsByClassName("checkbox")]
+		// checkboxElements.forEach(element => element.state.checked = false)
+	 }
+
 	render() {
-		const { items, activeIndex } = this.state
+		const { items, activeIndex, unCheckAll } = this.state
 
 		return (
 			<Grid style={{ margin: '0' }}>
@@ -92,10 +91,12 @@ export default class App extends React.Component {
 				<Grid.Row>
 					<Grid.Column divided width={4} style={{ padding: '3em 6em' }}>
 						<Header as='h1' style={{ fontSize: '3.4em' }}>Filter</Header>
-						<Form vertical ref={ ref => this.form = ref }>
+						<Form vertical>
 							<Form.Button
-								onClick={this.form.reset()}
-								textAlign='center' 
+								onClick={this.clearAll}
+								textAlign='center'
+								type="button"
+								content="Reset"
 								style={{ 
 									backgroundColor: '#EEEEEE', 
 									fontSize: '1.5em', 
@@ -115,10 +116,10 @@ export default class App extends React.Component {
 									Category
 								</Accordion.Title>
 								<Accordion.Content active={activeIndex === 0}>
-									<Checkbox name='electronics' label='Electronics' onChange={this.findFilter}/><br/>
-									<Checkbox name='books' label='Books' onChange={this.findFilter}/><br/>
-									<Checkbox name='school' label='School' onChange={this.findFilter}/><br/>
-									<Checkbox name='toy' label='Toy' onChange={this.findFilter}/>
+									<Form.Checkbox name='electronics' label='Electronics' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									<Form.Checkbox name='books' label='Books' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									<Form.Checkbox name='school' label='School' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									<Form.Checkbox name='toy' label='Toy' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
 								</Accordion.Content>
 
 								<Accordion.Title
@@ -130,10 +131,10 @@ export default class App extends React.Component {
 									Availability
 								</Accordion.Title>
 								<Accordion.Content active={activeIndex === 1}>
-									<Checkbox name='oneToFifty' label='1 to 50' onChange={this.findFilter}/><br/>
-									<Checkbox name='fiftyOneToHundred' label='51 to 100' onChange={this.findFilter}/><br/>
-									<Checkbox name='hundredOneToHundredFifty' label='101 to 150' onChange={this.findFilter}/><br/>
-									<Checkbox name='OneFiftyOneToTwoHundred' label='151 to 200' onChange={this.findFilter}/>
+									<Form.Checkbox name='oneToFifty' label='1 to 50' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									<Form.Checkbox name='fiftyOneToHundred' label='51 to 100' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									<Form.Checkbox name='hundredOneToHundredFifty' label='101 to 150' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									<Form.Checkbox name='OneFiftyOneToTwoHundred' label='151 to 200' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
 								</Accordion.Content>
 
 								<Accordion.Title
@@ -145,10 +146,10 @@ export default class App extends React.Component {
 									Price
 								</Accordion.Title>
 								<Accordion.Content active={activeIndex === 2}>
-									<Checkbox name='underFiftyBucks' label='Under $50' onChange={this.findFilter}/><br/>
-									<Checkbox name='fiftyOneToHundredBucks' label='$51 to $100' onChange={this.findFilter}/><br/>
-									<Checkbox name='oneHundredOneToFiveHundredBucks' label='$101 to $500' onChange={this.findFilter}/><br/>
-									<Checkbox name='overFiveHundredBucks' label='$500+' onChange={this.findFilter}/>
+									<Form.Checkbox name='underFiftyBucks' label='Under $50' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									<Form.Checkbox name='fiftyOneToHundredBucks' label='$51 to $100' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									<Form.Checkbox name='oneHundredOneToFiveHundredBucks' label='$101 to $500' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									<Form.Checkbox name='overFiveHundredBucks' label='$500+' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
 								</Accordion.Content>
 
 								<Accordion.Title
@@ -160,9 +161,9 @@ export default class App extends React.Component {
 									Rating
 								</Accordion.Title>
 								<Accordion.Content active={activeIndex === 3}>
-									<Checkbox name='overFour' label='Over 4 Stars' onChange={this.findFilter}/><br/>
-									<Checkbox name='overThree' label='Over 3 Stars' onChange={this.findFilter}/><br/>
-									<Checkbox name='overTwo' label='Over 2 Stars' onChange={this.findFilter}/>
+									<Form.Checkbox name='overFour' label='Over 4 Stars' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									<Form.Checkbox name='overThree' label='Over 3 Stars' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									<Form.Checkbox name='overTwo' label='Over 2 Stars' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
 								</Accordion.Content>
 							</Accordion>
 						</Form>
