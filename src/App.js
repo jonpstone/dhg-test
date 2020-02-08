@@ -1,5 +1,7 @@
 import React from 'react'
 import { Form, Grid, Header, Accordion, Icon } from 'semantic-ui-react'
+import checkboxes from './config/checkboxes'
+import Checkbox from './components/Checkbox'
 import ItemInfo from './components/ItemInfo'
 import 'semantic-ui-css/semantic.min.css'
 
@@ -14,7 +16,7 @@ export default class App extends React.Component {
 			items: [],
 			filter: [],
 			search: '',
-			unCheckAll: false
+			checkedItems: new Map(),		
 		}
 	}
 
@@ -29,49 +31,52 @@ export default class App extends React.Component {
 		this.setState({ items: [...itemsSrc] })
 	}
 
-	onSearch = () => {
-		// keyword
-	}
+	// onSearch = () => {
+	// 	// keyword
+	// }
 
-	onFilter = (...args) => {
-		this.setState({ items: [] })
-		// if (args.includes('electronics', 'book', 'school', 'toy')) {
-		// 	if ('electronics') {
+	// onFilter = (...args) => {
+	// 	this.setState({ items: [] })
+	// 	// if (args.includes('electronics', 'book', 'school', 'toy')) {
+	// 	// 	if ('electronics') {
 
-		// 	}
-		// }
-		console.log('ARGS', args)
-	}
+	// 	// 	}
+	// 	// }
+	// 	console.log('ARGS', args)
+	// }
 
-	findFilter = (e, {name}) => {
-		const { filter } = this.state
-		const arrCopy = this.state.filter
-		filter.includes(name) ?
-			this.setState({ filter: arrCopy.filter((checkName) => !(checkName === name)) }) :
-			this.setState({ filter: [...filter, name] })
-		this.onFilter(...filter)
-	}
+	// findFilter = (e, {value}) => {
+	// 	const { filter } = this.state
+	// 	const arrCopy = this.state.filter
+	// 	filter.includes(value) ?
+	// 		this.setState({ filter: arrCopy.filter((checkValue) => !(checkValue === value)) }) :
+	// 		this.setState({ filter: [...filter, value] })
+	// 	this.onFilter(...filter)
+	// }
 
-	findItem() {
+	// findItem() {
 
-	}
+	// }
 
-	alreadyIn() {
+	// alreadyIn() {
 
-	}
+	// }
 
 	clearAll = e => {
-		this.setState({ unCheckAll: true })
-		this.setState({ items: [...itemsSrc] })
+		this.setState({
+			checkedItems: new Map(),
+			items: [...itemsSrc]
+		})
 	}
 
-	unCheck = () => {
-		// const checkboxElements = [...document.getElementsByClassName("checkbox")]
-		// checkboxElements.forEach(element => element.state.checked = false)
-	 }
+	handleChange = e => {
+		const item = e.target.name;
+		const isChecked = e.target.checked;
+		this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
+	}
 
 	render() {
-		const { items, activeIndex, unCheckAll } = this.state
+		const { items, activeIndex, checkedItems } = this.state
 
 		return (
 			<Grid style={{ margin: '0' }}>
@@ -116,10 +121,21 @@ export default class App extends React.Component {
 									Category
 								</Accordion.Title>
 								<Accordion.Content active={activeIndex === 0}>
-									<Form.Checkbox name='electronics' label='Electronics' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
-									<Form.Checkbox name='books' label='Books' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
-									<Form.Checkbox name='school' label='School' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
-									<Form.Checkbox name='toy' label='Toy' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									{
+										checkboxes.map((item, index) => (
+											item.id > 1 && item.id <= 4 ?
+												<>
+													<Checkbox
+														key={item.key}
+														name={item.name} 
+														checked={checkedItems.get(item.name)} 
+														onChange={this.handleChange}
+													/>
+													<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
+												</>	: null
+											)
+										)
+									}
 								</Accordion.Content>
 
 								<Accordion.Title
@@ -131,10 +147,21 @@ export default class App extends React.Component {
 									Availability
 								</Accordion.Title>
 								<Accordion.Content active={activeIndex === 1}>
-									<Form.Checkbox name='oneToFifty' label='1 to 50' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
-									<Form.Checkbox name='fiftyOneToHundred' label='51 to 100' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
-									<Form.Checkbox name='hundredOneToHundredFifty' label='101 to 150' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
-									<Form.Checkbox name='OneFiftyOneToTwoHundred' label='151 to 200' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									{
+										checkboxes.map((item, index) => (
+											item.id > 4 && item.id <= 8 ?
+												<>
+													<Checkbox
+														key={item.key}
+														name={item.name} 
+														checked={checkedItems.get(item.name)} 
+														onChange={this.handleChange}
+													/>
+													<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
+												</>	: null
+											)
+										)
+									}
 								</Accordion.Content>
 
 								<Accordion.Title
@@ -146,10 +173,21 @@ export default class App extends React.Component {
 									Price
 								</Accordion.Title>
 								<Accordion.Content active={activeIndex === 2}>
-									<Form.Checkbox name='underFiftyBucks' label='Under $50' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
-									<Form.Checkbox name='fiftyOneToHundredBucks' label='$51 to $100' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
-									<Form.Checkbox name='oneHundredOneToFiveHundredBucks' label='$101 to $500' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
-									<Form.Checkbox name='overFiveHundredBucks' label='$500+' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									{
+										checkboxes.map((item, index) => (
+											item.id > 8 && item.id <= 12 ?
+												<>
+													<Checkbox
+														key={item.key}
+														name={item.name} 
+														checked={checkedItems.get(item.name)} 
+														onChange={this.handleChange}
+													/>
+													<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
+												</>	: null
+											)
+										)
+									}
 								</Accordion.Content>
 
 								<Accordion.Title
@@ -161,9 +199,21 @@ export default class App extends React.Component {
 									Rating
 								</Accordion.Title>
 								<Accordion.Content active={activeIndex === 3}>
-									<Form.Checkbox name='overFour' label='Over 4 Stars' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
-									<Form.Checkbox name='overThree' label='Over 3 Stars' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
-									<Form.Checkbox name='overTwo' label='Over 2 Stars' checked={unCheckAll ? false : this.state.checked} onChange={this.findFilter} />
+									{
+										checkboxes.map((item, index) => (
+											item.id > 12 && item.id <= 15 ?
+												<>
+													<Checkbox
+														key={item.key}
+														name={item.name} 
+														checked={checkedItems.get(item.name)} 
+														onChange={this.handleChange}
+													/>
+													<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
+												</>	: null
+											)
+										)
+									}
 								</Accordion.Content>
 							</Accordion>
 						</Form>

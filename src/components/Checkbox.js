@@ -1,24 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react'
 
-class Checkbox extends Component {
+const Checkbox = ({ type='checkbox', name, checked = false, onChange }) => (
+	<input type={type} name={name} checked={checked} onChange={onChange} />
+);
 
-  constructor(props) {
-    super(props)
-
-    this.state = {
-      checked: false
-    }
-  }
-
-  onFilter() {
-
-  }
-
-  render() {
-	  return (
-      // this.props.filter
-    );
-	}
-}
-
-export default Checkbox;
+export default Checkbox
