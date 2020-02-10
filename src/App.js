@@ -1,10 +1,11 @@
+import { csv } from 'd3'
 import React from 'react'
 import { Form, Grid, Header, Accordion, Icon } from 'semantic-ui-react'
 import checkboxes from './config/checkboxes'
 import Checkbox from './components/Checkbox'
-import ItemInfo from './components/ItemInfo'
 import ItemList from './components/ItemList'
 import 'semantic-ui-css/semantic.min.css'
+import data from './data/Product.csv'
 const itemsSrc = require('./Items.json')
 
 export default class App extends React.Component {
@@ -19,13 +20,9 @@ export default class App extends React.Component {
 			search: '',	
 		}
 	}
-
+	
 	componentDidMount() {
-		this.setState({ items: [...itemsSrc] })
-	}
-
-	componentDidUpdate() {
-
+		csv(data).then((newData) => this.setState(prevState =>({ items: newData })))
 	}
 
 	handleAccordionClick = (event, titleClick) => {
@@ -37,9 +34,6 @@ export default class App extends React.Component {
 	handleChange = event => {
 		const item = event.target.name
 		const isChecked = event.target.checked
-		const newFilter = []
-
-		
 		this.setState((prevState, props) => ({
 			checkedItems: prevState.checkedItems.set(item, isChecked),
 			items: [],
@@ -67,6 +61,7 @@ export default class App extends React.Component {
 	// 	// keyword
 	// }
 
+
 	electronicsFilter = (items) => {
 		items.filter(item => item.category === 'Electronics' ? item : null)
 	}
@@ -79,7 +74,7 @@ export default class App extends React.Component {
 		items.filter(item => item.category === 'Books' ? item : null)
 	}
 
-	clearAll = e => {
+	clearAll = event => {
 		this.setState({
 			items: [...itemsSrc],
 			filter: [],
@@ -88,7 +83,7 @@ export default class App extends React.Component {
 	}
 
 	render() {
-		const { items, activeIndex, checkedItems } = this.state
+		const { activeIndex, checkedItems } = this.state
 
 		return (
 			<Grid style={{ margin: '0' }}>
@@ -232,7 +227,7 @@ export default class App extends React.Component {
 					</Grid.Column>
 					<Grid.Column width={12} style={{ padding: '3em 6em' }}>
 						<Header as='h1' style={{ fontSize: '3.4em' }}>Results</Header>
-						{	
+						{/* {	
 							items && items.length ? items.map((item) =>
 								<ItemInfo
 									key={item.id}
@@ -246,15 +241,11 @@ export default class App extends React.Component {
 									description={item.description}						
 								/> 
 							) : "No results found..."
-						}
+						} */}
+
+						{/* <ItemList data={itemsSrc} selected={checkedItems} /> */}
+
 					</Grid.Column>
-				</Grid.Row>
-				<Grid.Row>
-					{
-						this.state.filter.map((filter) =>
-							<div>{filter}</div>
-						)
-					}
 				</Grid.Row>
 			</Grid>
 		);
