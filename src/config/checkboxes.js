@@ -1,24 +1,24 @@
 const checkboxes = [
     {
-        name: 'electronics',
+        name: 'Electronics',
         key: 'checkBox1',
         id: 1,
         label: 'Electronics',
     },
     {
-        name: 'books',
+        name: 'Books',
         key: 'checkBox2',
         id: 2,
         label: 'School',
     },
     {
-        name: 'school',
+        name: 'School',
         key: 'checkBox3',
         id: 3,
         label: 'Book',
     },
     {
-        name: 'toy',
+        name: 'Toy',
         key: 'checkBox4',
         id: 4,
         label: 'Toy',

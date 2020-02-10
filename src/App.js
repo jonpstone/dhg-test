@@ -3,8 +3,8 @@ import { Form, Grid, Header, Accordion, Icon } from 'semantic-ui-react'
 import checkboxes from './config/checkboxes'
 import Checkbox from './components/Checkbox'
 import ItemInfo from './components/ItemInfo'
+import ItemList from './components/ItemList'
 import 'semantic-ui-css/semantic.min.css'
-
 const itemsSrc = require('./Items.json')
 
 export default class App extends React.Component {
@@ -15,64 +15,76 @@ export default class App extends React.Component {
 		this.state = {
 			items: [],
 			filter: [],
-			search: '',
-			checkedItems: new Map(),		
+			checkedItems: new Map(),
+			search: '',	
 		}
-	}
-
-	handleAccordionClick = (e, titleClick) => {
-		const { activeIndex } = this.state
-		const newIndex = activeIndex === titleClick.index ? -1 : titleClick.index
-	
-		this.setState({ activeIndex: newIndex })
 	}
 
 	componentDidMount() {
 		this.setState({ items: [...itemsSrc] })
 	}
 
+	componentDidUpdate() {
+
+	}
+
+	handleAccordionClick = (event, titleClick) => {
+		const { activeIndex } = this.state
+		const newIndex = activeIndex === titleClick.index ? -1 : titleClick.index
+		this.setState({ activeIndex: newIndex })
+	}
+
+	handleChange = event => {
+		const item = event.target.name
+		const isChecked = event.target.checked
+		const newFilter = []
+
+		
+		this.setState((prevState, props) => ({
+			checkedItems: prevState.checkedItems.set(item, isChecked),
+			items: [],
+		}, this.findFilter()))
+	}
+
+	findFilter = () => {
+		const newFilter = []
+		for (let [key, value] of this.state.checkedItems) {
+			if (value === true) { newFilter.push(key) }
+		}
+		this.setState({
+			filter: newFilter
+		}, this.onFilter())
+	}
+
+	onFilter = () => {
+		const newItems = []
+		const { checkedItems } = this.state
+
+		
+	}
+
 	// onSearch = () => {
 	// 	// keyword
 	// }
 
-	// onFilter = (...args) => {
-	// 	this.setState({ items: [] })
-	// 	// if (args.includes('electronics', 'book', 'school', 'toy')) {
-	// 	// 	if ('electronics') {
+	electronicsFilter = (items) => {
+		items.filter(item => item.category === 'Electronics' ? item : null)
+	}
 
-	// 	// 	}
-	// 	// }
-	// 	console.log('ARGS', args)
-	// }
+	booksFilter = (items) => {
+		items.filter(item => item.category === 'Books' ? item : null)
+	}
 
-	// findFilter = (e, {value}) => {
-	// 	const { filter } = this.state
-	// 	const arrCopy = this.state.filter
-	// 	filter.includes(value) ?
-	// 		this.setState({ filter: arrCopy.filter((checkValue) => !(checkValue === value)) }) :
-	// 		this.setState({ filter: [...filter, value] })
-	// 	this.onFilter(...filter)
-	// }
-
-	// findItem() {
-
-	// }
-
-	// alreadyIn() {
-
-	// }
+	booksFilter = (items) => {
+		items.filter(item => item.category === 'Books' ? item : null)
+	}
 
 	clearAll = e => {
 		this.setState({
+			items: [...itemsSrc],
+			filter: [],
 			checkedItems: new Map(),
-			items: [...itemsSrc]
 		})
-	}
-
-	handleChange = e => {
-		const item = e.target.name;
-		const isChecked = e.target.checked;
-		this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
 	}
 
 	render() {
@@ -123,7 +135,7 @@ export default class App extends React.Component {
 								<Accordion.Content active={activeIndex === 0}>
 									{
 										checkboxes.map((item, index) => (
-											item.id > 1 && item.id <= 4 ?
+											item.id > 0 && item.id <= 4 ?
 												<>
 													<Checkbox
 														key={item.key}
@@ -236,6 +248,13 @@ export default class App extends React.Component {
 							) : "No results found..."
 						}
 					</Grid.Column>
+				</Grid.Row>
+				<Grid.Row>
+					{
+						this.state.filter.map((filter) =>
+							<div>{filter}</div>
+						)
+					}
 				</Grid.Row>
 			</Grid>
 		);
