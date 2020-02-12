@@ -6,13 +6,13 @@ const checkboxes = [
         label: 'Electronics',
     },
     {
-        name: 'Books',
+        name: 'School',
         key: 'checkBox2',
         id: 2,
         label: 'School',
     },
     {
-        name: 'School',
+        name: 'Books',
         key: 'checkBox3',
         id: 3,
         label: 'Book',
@@ -42,7 +42,7 @@ const checkboxes = [
         label: '101 - 150',
     },
     {
-        name: 'OneFiftyOneToTwoHundred',
+        name: 'oneFiftyOneToTwoHundred',
         key: 'checkBox8',
         id: 8,
         label: '151 - 200',

@@ -6,7 +6,8 @@ import Checkbox from './components/Checkbox'
 import ItemList from './components/ItemList'
 import 'semantic-ui-css/semantic.min.css'
 import data from './data/Product.csv'
-const itemsSrc = require('./Items.json')
+
+import itemsSrc from './data/Items.json'
 
 export default class App extends React.Component {
 
@@ -22,7 +23,7 @@ export default class App extends React.Component {
 	}
 	
 	componentDidMount() {
-		csv(data).then((newData) => this.setState(prevState =>({ items: newData })))
+		csv(data).then((newData) => this.setState({ items: newData }))
 	}
 
 	handleAccordionClick = (event, titleClick) => {
@@ -47,43 +48,23 @@ export default class App extends React.Component {
 		}
 		this.setState({
 			filter: newFilter
-		}, this.onFilter())
-	}
-
-	onFilter = () => {
-		const newItems = []
-		const { checkedItems } = this.state
-
-		
+		})
 	}
 
 	// onSearch = () => {
 	// 	// keyword
 	// }
 
-
-	electronicsFilter = (items) => {
-		items.filter(item => item.category === 'Electronics' ? item : null)
-	}
-
-	booksFilter = (items) => {
-		items.filter(item => item.category === 'Books' ? item : null)
-	}
-
-	booksFilter = (items) => {
-		items.filter(item => item.category === 'Books' ? item : null)
-	}
-
 	clearAll = event => {
-		this.setState({
-			items: [...itemsSrc],
+		csv(data).then((newData) => this.setState({
+			items: newData,
 			filter: [],
 			checkedItems: new Map(),
-		})
+		}))
 	}
 
 	render() {
-		const { activeIndex, checkedItems } = this.state
+		const { activeIndex, checkedItems, filter, items } = this.state
 
 		return (
 			<Grid style={{ margin: '0' }}>
@@ -227,23 +208,8 @@ export default class App extends React.Component {
 					</Grid.Column>
 					<Grid.Column width={12} style={{ padding: '3em 6em' }}>
 						<Header as='h1' style={{ fontSize: '3.4em' }}>Results</Header>
-						{/* {	
-							items && items.length ? items.map((item) =>
-								<ItemInfo
-									key={item.id}
-									name={item.name}
-									image={item.image}
-									category={item.Electronics}
-									color={item.color}
-									rating={item.rating}
-									price={item.price}
-									itemsLeft={item.items_left}
-									description={item.description}						
-								/> 
-							) : "No results found..."
-						} */}
 
-						{/* <ItemList data={itemsSrc} selected={checkedItems} /> */}
+						<ItemList data={items} filter={filter} />	
 
 					</Grid.Column>
 				</Grid.Row>
