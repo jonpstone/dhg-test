@@ -1,10 +1,9 @@
-import { csv } from 'd3'
+// import { csv } from 'd3'
 import React from 'react'
 import { Form, Grid, Header, Accordion, Icon } from 'semantic-ui-react'
 import checkboxes from './config/checkboxes'
 import Checkbox from './components/Checkbox'
 import ItemList from './components/ItemList'
-import ItemInfo from './components/ItemInfo'
 import 'semantic-ui-css/semantic.min.css'
 import './main.scss';
 const itemsSrc = require('./data/Items.json')
@@ -53,7 +52,7 @@ export default class App extends React.Component {
 		this.setState({	filter: newFilter })
 	}
 
-	onFilter = (filter) => {
+	onFilter = filter => {
         return this.state.items.filter((item) => {
             return (filter.includes(item.category) || filter.includes(item.category2)) ||
             (filter.includes('oneToFifty') && (item.items_left > 0 && item.items_left <= 50)) ||
@@ -81,10 +80,18 @@ export default class App extends React.Component {
 		const filtered = [...new Set(this.onFilter(this.state.filter))]
 
 		return (
-			<Grid style={{ margin: '0' }}>
+			<Grid celled style={{ margin: '0' }}>
 				<Grid.Row style={{ padding: '2em 3em 1em', backgroundColor: '#0f84a8'}}>
 					<Grid.Column width={6} textAlign='center'>
-						<Header as='h1' inverted style={{ fontSize: '4.4em' }}>Store Page</Header>
+						<Header
+							inverted
+							as='h1' 
+							style={{ 
+								fontSize: '4.4em', fontFamily: "'Montserrat', sans-serif", fontWeight: '900' 
+							}}
+						>
+							Store Page
+						</Header>
 					</Grid.Column>
 					<Grid.Column width={10}>
 						<Form>
@@ -94,10 +101,11 @@ export default class App extends React.Component {
 									placeholder='Type to search...' 
 									style={{ width: '26em', paddingRight: '1.7em' }}
 									onChange={this.handleTextChange}
+									focus
 								/>
 								<Form.Button						// <-- Left inert as results are results are 
 									size='massive'					//	   returned as the user types
-									style={{ width: '10em'}}
+									style={{ width: '10em', fontFamily: "'Montserrat', sans-serif"}}
 								>
 									Search
 								</Form.Button>
@@ -107,7 +115,12 @@ export default class App extends React.Component {
 				</Grid.Row>
 				<Grid.Row>
 					<Grid.Column divided width={4} style={{ padding: '3em 6em' }}>
-						<Header as='h1' style={{ fontSize: '3.4em' }}>Filter</Header>
+						<Header 
+							as='h1' 
+							style={{ fontSize: '3.4em', fontFamily: "'Montserrat', sans-serif", fontWeight: '900' }}
+						>
+							Filter
+						</Header>
 						<Form vertical>
 							<Form.Button
 								onClick={this.clearAll}
@@ -118,7 +131,8 @@ export default class App extends React.Component {
 									backgroundColor: '#EEEEEE', 
 									fontSize: '1.5em', 
 									width: '14.73em',
-									marginBottom: '1em'
+									marginBottom: '1em', 
+									fontFamily: "'Montserrat', sans-serif"
 								}}>
 									Clear All
 							</Form.Button>
@@ -128,6 +142,7 @@ export default class App extends React.Component {
 									active={activeIndex === 0}
 									index={0}
 									onClick={this.handleAccordionClick}
+									style={{ fontFamily: "'Montserrat', sans-serif" }}
 								>
 									<Icon name='dropdown' />
 									Category
@@ -154,6 +169,7 @@ export default class App extends React.Component {
 									active={activeIndex === 1}
 									index={1}
 									onClick={this.handleAccordionClick}
+									style={{ fontFamily: "'Montserrat', sans-serif" }}
 								>
 									<Icon name='dropdown' />
 									Availability
@@ -180,6 +196,7 @@ export default class App extends React.Component {
 									active={activeIndex === 2}
 									index={2}
 									onClick={this.handleAccordionClick}
+									style={{ fontFamily: "'Montserrat', sans-serif" }}
 								>
 									<Icon name='dropdown' />
 									Price
@@ -206,6 +223,7 @@ export default class App extends React.Component {
 									active={activeIndex === 3}
 									index={3}
 									onClick={this.handleAccordionClick}
+									style={{ fontFamily: "'Montserrat', sans-serif" }}
 								>
 									<Icon name='dropdown' />
 									Rating
@@ -231,11 +249,21 @@ export default class App extends React.Component {
 						</Form>
 					</Grid.Column>
 					<Grid.Column width={12} style={{ padding: '3em 6em' }}>
-						<Header as='h1' style={{ fontSize: '3.4em' }}>Results</Header>
-						<div>Returned {items.length} Items</div>
-						{
-							filter.length ? <ItemList data={filtered} /> : <ItemList data={items} />
-						}
+						<Grid.Row style={{ marginBottom: '3.5em'}}>
+							<Header 
+								className='resultsTitle' 
+								as='h1' 
+								style={{ fontSize: '3.4em', marginRight: '70%', fontFamily: "'Montserrat', sans-serif", fontWeight: '900' }}
+							>
+								Results
+							</Header>
+							<div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: '1.2em' }}>
+								Returned {filtered.length ? filtered.length : items.length} Items
+							</div><br/>
+						</Grid.Row>
+						<Grid.Row>
+							{filter.length ? <ItemList data={filtered} /> : <ItemList data={items} />}
+						</Grid.Row>
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
