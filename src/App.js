@@ -6,6 +6,7 @@ import Checkbox from './components/Checkbox'
 import ItemList from './components/ItemList'
 import ItemInfo from './components/ItemInfo'
 import 'semantic-ui-css/semantic.min.css'
+import './main.scss';
 const itemsSrc = require('./data/Items.json')
 // import data from './data/Product.csv'
 
@@ -13,10 +14,12 @@ export default class App extends React.Component {
 	state = {
 		items: [],
 		filter: [],
+		numReturns: [],
 		checkedItems: new Map(),
 	}
 	
-	componentDidMount() { this.setState({ items: itemsSrc }) }
+	componentDidMount() { 
+		this.setState({ items: itemsSrc }) }
 		// csv(data).then((newData) => this.setState({ items: newData })) <-- Data set will not work with word search
 		//																	  unless converted to JSON manually.
 
@@ -50,6 +53,22 @@ export default class App extends React.Component {
 		this.setState({	filter: newFilter })
 	}
 
+	onFilter = (filter) => {
+        return this.state.items.filter((item) => {
+            return (filter.includes(item.category) || filter.includes(item.category2)) ||
+            (filter.includes('oneToFifty') && (item.items_left > 0 && item.items_left <= 50)) ||
+            (filter.includes('fiftyOneToHundred') && (item.items_left > 50 && item.items_left <= 100 )) ||
+            (filter.includes('oneFiftyOneToTwoHundred') && (item.items_left > 150 && item.items_left <= 200 )) ||
+            (filter.includes('underFiftyBucks') && (item.price < 50 )) ||
+            (filter.includes('fiftyOneToHundredBucks') && (item.price >= 50 && item.price <= 100)) || 
+            (filter.includes('oneHundredOneToFiveHundredBucks') && (item.price > 100 && item.price <= 500)) ||
+            (filter.includes('overFiveHundredBucks') && (item.price > 500)) || 
+            (filter.includes('overFour') && (item.rating > 4)) ||
+            (filter.includes('overThree') && (item.rating > 3)) ||
+            (filter.includes('overTwo') && (item.rating > 2)) 
+        })
+    }
+
 	clearAll = event => { this.setState({items: itemsSrc, filter: [], checkedItems: new Map()}) }
 		// csv(data).then((newData) => this.setState({  				<-- Data set will not work with word search
 		// 	items: newData, 												unless converted to JSON manually.
@@ -59,6 +78,7 @@ export default class App extends React.Component {
 		
 	render() {
 		const { activeIndex, checkedItems, filter, items } = this.state
+		const filtered = [...new Set(this.onFilter(this.state.filter))]
 
 		return (
 			<Grid style={{ margin: '0' }}>
@@ -75,8 +95,8 @@ export default class App extends React.Component {
 									style={{ width: '26em', paddingRight: '1.7em' }}
 									onChange={this.handleTextChange}
 								/>
-								<Form.Button 
-									size='massive'
+								<Form.Button						// <-- Left inert as results are results are 
+									size='massive'					//	   returned as the user types
 									style={{ width: '10em'}}
 								>
 									Search
@@ -212,24 +232,10 @@ export default class App extends React.Component {
 					</Grid.Column>
 					<Grid.Column width={12} style={{ padding: '3em 6em' }}>
 						<Header as='h1' style={{ fontSize: '3.4em' }}>Results</Header>
-						{console.log('state in UI', items)}
+						<div>Returned {items.length} Items</div>
 						{
-							filter.length ? <ItemList data={items} filter={filter} /> :
-								items.map(item =>
-									<ItemInfo
-										key={item.id}
-										name={item.name}
-										image={item.image}
-										category={item.Electronics}
-										color={item.color}
-										rating={item.rating}
-										price={item.price}
-										itemsLeft={item.items_left}
-										description={item.description}						
-									/> 
-								)
+							filter.length ? <ItemList data={filtered} /> : <ItemList data={items} />
 						}
-
 					</Grid.Column>
 				</Grid.Row>
 			</Grid>
