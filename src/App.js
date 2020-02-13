@@ -6,29 +6,31 @@ import Checkbox from './components/Checkbox'
 import ItemList from './components/ItemList'
 import ItemInfo from './components/ItemInfo'
 import 'semantic-ui-css/semantic.min.css'
-import data from './data/Product.csv'
+const itemsSrc = require('./data/Items.json')
+// import data from './data/Product.csv'
 
 export default class App extends React.Component {
-
-	constructor(props) {
-		super(props);
-
-		this.state = {
-			items: [],
-			filter: [],
-			checkedItems: new Map(),
-			search: '',
-		}
+	state = {
+		items: [],
+		filter: [],
+		checkedItems: new Map(),
 	}
 	
-	componentDidMount() {
-		csv(data).then((newData) => this.setState({ items: newData }))
-	}
+	componentDidMount() { this.setState({ items: itemsSrc }) }
+		// csv(data).then((newData) => this.setState({ items: newData })) <-- Data set will not work with word search
+		//																	  unless converted to JSON manually.
 
 	handleAccordionClick = (event, titleClick) => {
 		const { activeIndex } = this.state
 		const newIndex = activeIndex === titleClick.index ? -1 : titleClick.index
 		this.setState({ activeIndex: newIndex })
+	}
+
+	handleTextChange = event => {
+		const newItems = this.state.items.filter((item) => {
+			return item.description.toLowerCase().includes(event.target.value.toLowerCase()) ? item : null
+		})
+		this.setState({items: newItems})
 	}
 
 	handleChange = event => {
@@ -45,23 +47,16 @@ export default class App extends React.Component {
 		for (let [key, value] of this.state.checkedItems) {
 			if (value === true) { newFilter.push(key) }
 		}
-		this.setState({
-			filter: newFilter
-		})
+		this.setState({	filter: newFilter })
 	}
 
-	// onSearch = () => {
-	// 	// keyword
-	// }
-
-	clearAll = event => {
-		csv(data).then((newData) => this.setState({
-			items: newData,
-			filter: [],
-			checkedItems: new Map(),
-		}))
-	}
-
+	clearAll = event => { this.setState({items: itemsSrc, filter: [], checkedItems: new Map()}) }
+		// csv(data).then((newData) => this.setState({  				<-- Data set will not work with word search
+		// 	items: newData, 												unless converted to JSON manually.
+		// 	filter: [],
+		// 	checkedItems: new Map(),
+		// }))
+		
 	render() {
 		const { activeIndex, checkedItems, filter, items } = this.state
 
@@ -78,9 +73,14 @@ export default class App extends React.Component {
 									size='massive' 
 									placeholder='Type to search...' 
 									style={{ width: '26em', paddingRight: '1.7em' }}
-									// onChange={}
+									onChange={this.handleTextChange}
 								/>
-								<Form.Button size='massive' style={{ width: '10em'}}>Search</Form.Button>
+								<Form.Button 
+									size='massive'
+									style={{ width: '10em'}}
+								>
+									Search
+								</Form.Button>
 							</Form.Group>
 						</Form>
 					</Grid.Column>
@@ -212,7 +212,7 @@ export default class App extends React.Component {
 					</Grid.Column>
 					<Grid.Column width={12} style={{ padding: '3em 6em' }}>
 						<Header as='h1' style={{ fontSize: '3.4em' }}>Results</Header>
-
+						{console.log('state in UI', items)}
 						{
 							filter.length ? <ItemList data={items} filter={filter} /> :
 								items.map(item =>
