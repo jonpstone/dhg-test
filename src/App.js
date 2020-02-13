@@ -30,7 +30,8 @@ export default class App extends React.Component {
 
 	handleTextChange = event => {
 		const newItems = this.state.items.filter((item) => {
-			return item.description.toLowerCase().includes(event.target.value.toLowerCase()) ? item : null
+			return item.description.toLowerCase().includes(event.target.value.toLowerCase()) ||
+				item.name.toLowerCase().includes(event.target.value.toLowerCase()) ? item : null
 		})
 		this.setState({items: newItems})
 	}
@@ -80,193 +81,197 @@ export default class App extends React.Component {
 		const filtered = [...new Set(this.onFilter(this.state.filter))]
 
 		return (
-			<Grid celled style={{ margin: '0' }}>
-				<Grid.Row style={{ padding: '2em 3em 1em', backgroundColor: '#0f84a8'}}>
-					<Grid.Column width={6} textAlign='center'>
-						<Header
-							inverted
-							as='h1' 
-							style={{ 
-								fontSize: '4.4em', fontFamily: "'Montserrat', sans-serif", fontWeight: '900' 
-							}}
-						>
-							Store Page
-						</Header>
-					</Grid.Column>
-					<Grid.Column width={10}>
-						<Form>
-							<Form.Group>
-								<Form.Input 
-									size='massive' 
-									placeholder='Type to search...' 
-									style={{ width: '26em', paddingRight: '1.7em' }}
-									onChange={this.handleTextChange}
-									focus
-								/>
-								<Form.Button						// <-- Left inert as results are results are 
-									size='massive'					//	   returned as the user types
-									style={{ width: '10em', fontFamily: "'Montserrat', sans-serif"}}
-								>
-									Search
-								</Form.Button>
-							</Form.Group>
-						</Form>
-					</Grid.Column>
-				</Grid.Row>
-				<Grid.Row>
-					<Grid.Column divided width={4} style={{ padding: '3em 6em' }}>
-						<Header 
-							as='h1' 
-							style={{ fontSize: '3.4em', fontFamily: "'Montserrat', sans-serif", fontWeight: '900' }}
-						>
-							Filter
-						</Header>
-						<Form vertical>
-							<Form.Button
-								onClick={this.clearAll}
-								textAlign='center'
-								type="button"
-								content="Reset"
-								style={{ 
-									backgroundColor: '#EEEEEE', 
-									fontSize: '1.5em', 
-									width: '14.73em',
-									marginBottom: '1em', 
-									fontFamily: "'Montserrat', sans-serif"
-								}}>
-									Clear All
-							</Form.Button>
-							
-							<Accordion styled style={{ backgroundColor: '#EEEEEE', fontSize: '1.5em' }}>
-								<Accordion.Title
-									active={activeIndex === 0}
-									index={0}
-									onClick={this.handleAccordionClick}
-									style={{ fontFamily: "'Montserrat', sans-serif" }}
-								>
-									<Icon name='dropdown' />
-									Category
-								</Accordion.Title>
-								<Accordion.Content active={activeIndex === 0}>
-									{
-										checkboxes.map((item, index) => (
-											item.id > 0 && item.id <= 4 ?
-												<>
-													<Checkbox
-														key={item.key}
-														name={item.name} 
-														checked={checkedItems.get(item.name)} 
-														onChange={this.handleChange}
-													/>
-													<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
-												</>	: null
-											)
-										)
-									}
-								</Accordion.Content>
-
-								<Accordion.Title
-									active={activeIndex === 1}
-									index={1}
-									onClick={this.handleAccordionClick}
-									style={{ fontFamily: "'Montserrat', sans-serif" }}
-								>
-									<Icon name='dropdown' />
-									Availability
-								</Accordion.Title>
-								<Accordion.Content active={activeIndex === 1}>
-									{
-										checkboxes.map((item, index) => (
-											item.id > 4 && item.id <= 8 ?
-												<>
-													<Checkbox
-														key={item.key}
-														name={item.name} 
-														checked={checkedItems.get(item.name)} 
-														onChange={this.handleChange}
-													/>
-													<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
-												</>	: null
-											)
-										)
-									}
-								</Accordion.Content>
-
-								<Accordion.Title
-									active={activeIndex === 2}
-									index={2}
-									onClick={this.handleAccordionClick}
-									style={{ fontFamily: "'Montserrat', sans-serif" }}
-								>
-									<Icon name='dropdown' />
-									Price
-								</Accordion.Title>
-								<Accordion.Content active={activeIndex === 2}>
-									{
-										checkboxes.map((item, index) => (
-											item.id > 8 && item.id <= 12 ?
-												<>
-													<Checkbox
-														key={item.key}
-														name={item.name} 
-														checked={checkedItems.get(item.name)} 
-														onChange={this.handleChange}
-													/>
-													<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
-												</>	: null
-											)
-										)
-									}
-								</Accordion.Content>
-
-								<Accordion.Title
-									active={activeIndex === 3}
-									index={3}
-									onClick={this.handleAccordionClick}
-									style={{ fontFamily: "'Montserrat', sans-serif" }}
-								>
-									<Icon name='dropdown' />
-									Rating
-								</Accordion.Title>
-								<Accordion.Content active={activeIndex === 3}>
-									{
-										checkboxes.map((item, index) => (
-											item.id > 12 && item.id <= 15 ?
-												<>
-													<Checkbox
-														key={item.key}
-														name={item.name} 
-														checked={checkedItems.get(item.name)} 
-														onChange={this.handleChange}
-													/>
-													<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
-												</>	: null
-											)
-										)
-									}
-								</Accordion.Content>
-							</Accordion>
-						</Form>
-					</Grid.Column>
-					<Grid.Column width={12} style={{ padding: '3em 6em' }}>
-						<Grid.Row style={{ marginBottom: '3.5em'}}>
-							<Header 
-								className='resultsTitle' 
+<>
+				<Grid style={{ margin: '0' }}>
+					<Grid.Row style={{ padding: '2em 3em 1em', backgroundColor: '#0f84a8'}}>
+						<Grid.Column width={6} textAlign='center'>
+							<Header
+								inverted
 								as='h1' 
-								style={{ fontSize: '3.4em', marginRight: '70%', fontFamily: "'Montserrat', sans-serif", fontWeight: '900' }}
+								style={{ 
+									fontSize: '4.4em', fontFamily: "'Montserrat', sans-serif", fontWeight: '900' 
+								}}
 							>
-								Results
+								Store Page
 							</Header>
-							<div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: '1.2em' }}>
-								Returned {filtered.length ? filtered.length : items.length} Items
-							</div><br/>
-						</Grid.Row>
-						<Grid.Row>
-							{filter.length ? <ItemList data={filtered} /> : <ItemList data={items} />}
-						</Grid.Row>
-					</Grid.Column>
-				</Grid.Row>
-			</Grid>
+						</Grid.Column>
+						<Grid.Column width={10}>
+							<Form>
+								<Form.Group>
+									<Form.Input 
+										size='massive' 
+										placeholder='Type to search...' 
+										style={{ width: '26em', paddingRight: '1.7em' }}
+										onChange={this.handleTextChange}
+										focus
+									/>
+									<Form.Button						// <-- Left inert as results are results are 
+										size='massive'					//	   returned as the user types
+										style={{ width: '10em', fontFamily: "'Montserrat', sans-serif"}}
+									>
+										Search
+									</Form.Button>
+								</Form.Group>
+							</Form>
+						</Grid.Column>
+					</Grid.Row>
+				</Grid>
+				<Grid celled style={{ margin: 0 }}>
+					<Grid.Row>
+						<Grid.Column divided width={4} style={{ padding: '3em 6em' }}>
+							<Header 
+								as='h1' 
+								style={{ fontSize: '3.4em', fontFamily: "'Montserrat', sans-serif", fontWeight: '900' }}
+							>
+								Filter
+							</Header>
+							<Form vertical>
+								<Form.Button
+									onClick={this.clearAll}
+									textAlign='center'
+									type="button"
+									content="Reset"
+									style={{ 
+										backgroundColor: '#EEEEEE', 
+										fontSize: '1.5em', 
+										width: '14.73em',
+										marginBottom: '1em', 
+										fontFamily: "'Montserrat', sans-serif"
+									}}>
+										Clear All
+								</Form.Button>
+								
+								<Accordion styled style={{ backgroundColor: '#EEEEEE', fontSize: '1.5em' }}>
+									<Accordion.Title
+										active={activeIndex === 0}
+										index={0}
+										onClick={this.handleAccordionClick}
+										style={{ fontFamily: "'Montserrat', sans-serif" }}
+									>
+										<Icon name='dropdown' />
+										Category
+									</Accordion.Title>
+									<Accordion.Content active={activeIndex === 0}>
+										{
+											checkboxes.map((item, index) => (
+												item.id > 0 && item.id <= 4 ?
+													<>
+														<Checkbox
+															key={item.key}
+															name={item.name} 
+															checked={checkedItems.get(item.name)} 
+															onChange={this.handleChange}
+														/>
+														<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
+													</>	: null
+												)
+											)
+										}
+									</Accordion.Content>
+	
+									<Accordion.Title
+										active={activeIndex === 1}
+										index={1}
+										onClick={this.handleAccordionClick}
+										style={{ fontFamily: "'Montserrat', sans-serif" }}
+									>
+										<Icon name='dropdown' />
+										Availability
+									</Accordion.Title>
+									<Accordion.Content active={activeIndex === 1}>
+										{
+											checkboxes.map((item, index) => (
+												item.id > 4 && item.id <= 8 ?
+													<>
+														<Checkbox
+															key={item.key}
+															name={item.name} 
+															checked={checkedItems.get(item.name)} 
+															onChange={this.handleChange}
+														/>
+														<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
+													</>	: null
+												)
+											)
+										}
+									</Accordion.Content>
+	
+									<Accordion.Title
+										active={activeIndex === 2}
+										index={2}
+										onClick={this.handleAccordionClick}
+										style={{ fontFamily: "'Montserrat', sans-serif" }}
+									>
+										<Icon name='dropdown' />
+										Price
+									</Accordion.Title>
+									<Accordion.Content active={activeIndex === 2}>
+										{
+											checkboxes.map((item, index) => (
+												item.id > 8 && item.id <= 12 ?
+													<>
+														<Checkbox
+															key={item.key}
+															name={item.name} 
+															checked={checkedItems.get(item.name)} 
+															onChange={this.handleChange}
+														/>
+														<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
+													</>	: null
+												)
+											)
+										}
+									</Accordion.Content>
+	
+									<Accordion.Title
+										active={activeIndex === 3}
+										index={3}
+										onClick={this.handleAccordionClick}
+										style={{ fontFamily: "'Montserrat', sans-serif" }}
+									>
+										<Icon name='dropdown' />
+										Rating
+									</Accordion.Title>
+									<Accordion.Content active={activeIndex === 3}>
+										{
+											checkboxes.map((item, index) => (
+												item.id > 12 && item.id <= 15 ?
+													<>
+														<Checkbox
+															key={item.key}
+															name={item.name} 
+															checked={checkedItems.get(item.name)} 
+															onChange={this.handleChange}
+														/>
+														<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
+													</>	: null
+												)
+											)
+										}
+									</Accordion.Content>
+								</Accordion>
+							</Form>
+						</Grid.Column>
+						<Grid.Column width={12} style={{ padding: '3em 6em' }}>
+							<Grid.Row style={{ marginBottom: '3.5em'}}>
+								<Header 
+									className='resultsTitle' 
+									as='h1' 
+									style={{ fontSize: '3.4em', marginRight: '70%', fontFamily: "'Montserrat', sans-serif", fontWeight: '900' }}
+								>
+									Results
+								</Header>
+								<div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: '1.2em' }}>
+									Returned {filtered.length ? filtered.length : items.length} Items
+								</div><br/>
+							</Grid.Row>
+							<Grid.Row>
+								{filter.length ? <ItemList data={filtered} /> : <ItemList data={items} />}
+							</Grid.Row>
+						</Grid.Column>
+					</Grid.Row>
+				</Grid>
+</>
 		);
 	}
 }
