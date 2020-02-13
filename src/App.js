@@ -84,24 +84,27 @@ export default class App extends React.Component {
 <>
 				<Grid style={{ margin: '0' }}>
 					<Grid.Row style={{ padding: '2em 3em 1em', backgroundColor: '#0f84a8'}}>
-						<Grid.Column width={6} textAlign='center'>
+						<Grid.Column width={6} >
 							<Header
 								inverted
 								as='h1' 
 								style={{ 
-									fontSize: '4.4em', fontFamily: "'Montserrat', sans-serif", fontWeight: '900' 
+									fontSize: '4.4em', 
+									fontFamily: "'Montserrat', sans-serif",
+									fontWeight: '1000',
+									paddingLeft: '2em'
 								}}
 							>
 								Store Page
 							</Header>
 						</Grid.Column>
-						<Grid.Column width={10}>
-							<Form>
+						<Grid.Column width={10} style={{ padding: '0'}}>
+							<Form style={{ marginLeft: '5em', paddingLeft: '0', marginLeft: '0' }}>
 								<Form.Group>
 									<Form.Input 
 										size='massive' 
-										placeholder='Type to search...' 
-										style={{ width: '26em', paddingRight: '1.7em' }}
+										placeholder='Type to search...'
+										style={{ paddingLeft: '0', width: '33.75em', paddingRight: '1.7em' }}
 										onChange={this.handleTextChange}
 										focus
 									/>
@@ -118,19 +121,18 @@ export default class App extends React.Component {
 				</Grid>
 				<Grid celled style={{ margin: 0 }}>
 					<Grid.Row>
-						<Grid.Column divided width={4} style={{ padding: '3em 6em' }}>
+						<Grid.Column width={4} style={{ padding: '3em 6em' }}>
 							<Header 
 								as='h1' 
-								style={{ fontSize: '3.4em', fontFamily: "'Montserrat', sans-serif", fontWeight: '900' }}
+								style={{ fontSize: '3.4em', fontFamily: "'Montserrat', sans-serif", fontWeight: '1000' }}
 							>
 								Filter
 							</Header>
-							<Form vertical>
+							<Form>
 								<Form.Button
 									onClick={this.clearAll}
 									textAlign='center'
-									type="button"
-									content="Reset"
+									type='button'
 									style={{ 
 										backgroundColor: '#EEEEEE', 
 										fontSize: '1.5em', 
@@ -157,12 +159,14 @@ export default class App extends React.Component {
 												item.id > 0 && item.id <= 4 ?
 													<>
 														<Checkbox
-															key={item.key}
+															key={index}
 															name={item.name} 
 															checked={checkedItems.get(item.name)} 
 															onChange={this.handleChange}
 														/>
-														<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
+														<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>
+															{item.label}
+														</label><br/>
 													</>	: null
 												)
 											)
@@ -184,12 +188,14 @@ export default class App extends React.Component {
 												item.id > 4 && item.id <= 8 ?
 													<>
 														<Checkbox
-															key={item.key}
+															key={index}
 															name={item.name} 
 															checked={checkedItems.get(item.name)} 
 															onChange={this.handleChange}
 														/>
-														<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
+														<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>
+															{item.label}
+														</label><br/>
 													</>	: null
 												)
 											)
@@ -211,12 +217,14 @@ export default class App extends React.Component {
 												item.id > 8 && item.id <= 12 ?
 													<>
 														<Checkbox
-															key={item.key}
+															key={index}
 															name={item.name} 
 															checked={checkedItems.get(item.name)} 
 															onChange={this.handleChange}
 														/>
-														<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
+														<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>
+															{item.label}
+														</label><br/>
 													</>	: null
 												)
 											)
@@ -238,12 +246,14 @@ export default class App extends React.Component {
 												item.id > 12 && item.id <= 15 ?
 													<>
 														<Checkbox
-															key={item.key}
+															key={index}
 															name={item.name} 
 															checked={checkedItems.get(item.name)} 
 															onChange={this.handleChange}
 														/>
-														<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>{item.label}</label><br/>
+														<label style={{ marginLeft: '.3em', fontSize: '.8em' }}>
+															{item.label}
+														</label><br/>
 													</>	: null
 												)
 											)
@@ -257,7 +267,7 @@ export default class App extends React.Component {
 								<Header 
 									className='resultsTitle' 
 									as='h1' 
-									style={{ fontSize: '3.4em', marginRight: '70%', fontFamily: "'Montserrat', sans-serif", fontWeight: '900' }}
+									style={{ fontSize: '3.4em', marginRight: '70%', fontFamily: "'Montserrat', sans-serif", fontWeight: '1000' }}
 								>
 									Results
 								</Header>

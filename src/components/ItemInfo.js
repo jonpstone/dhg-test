@@ -11,7 +11,7 @@ export default ({ image, name, rating, description, price }) =>
 			<Header 
 				as='h1' 
 				className='leftDiv' 
-				style={{ fontWeight: 'bold', fontFamily: "'Montserrat', sans-serif", fontWeight: 'bold' }}
+				style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: '1000' }}
 			>
 				{name}
 			</Header>
@@ -21,16 +21,27 @@ export default ({ image, name, rating, description, price }) =>
 					rating={rating}
 					starRatedColor="#2D9CC0"
 					numberOfStars={5}
-					starDimension="1em"
+					starDimension="2em"
 					name='rating'
-					starSpacing={1}
+					starSpacing='0'
 				/>
 			</div><br />
-			<p style={{ marginTop: '2em', fontFamily: "'Montserrat', sans-serif", fontSize: '1.2em'}}>{description}</p><br />
+			<p 
+				style={{ 
+					marginTop: '2em', fontFamily: "'Montserrat', sans-serif", fontSize: '1.2em'
+				}}
+			>
+				{description}
+			</p><br />
 		</Grid.Column>
 		<Grid.Column width={4} textAlign='center'>
-			<Header as='h1' style={{ fontFamily: "'Montserrat', sans-serif"}}>${price}</Header>
-			<Button className='addToCart' content='Add to Cart' size='large' style={{ width: '10em' }}/>
+			<Header as='h1' style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: '1000' }}>${price}</Header>
+			<Button 
+				className='addToCart' 
+				content='Add to Cart' 
+				size='massive' 
+				style={{ width: '10em', fontFamily: "'Montserrat', sans-serif" }}
+			/>
 		</Grid.Column>
 	</Grid>
 
