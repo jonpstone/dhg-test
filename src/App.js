@@ -4,10 +4,9 @@ import { Form, Grid, Header, Accordion, Icon } from 'semantic-ui-react'
 import checkboxes from './config/checkboxes'
 import Checkbox from './components/Checkbox'
 import ItemList from './components/ItemList'
+import ItemInfo from './components/ItemInfo'
 import 'semantic-ui-css/semantic.min.css'
 import data from './data/Product.csv'
-
-import itemsSrc from './data/Items.json'
 
 export default class App extends React.Component {
 
@@ -18,7 +17,7 @@ export default class App extends React.Component {
 			items: [],
 			filter: [],
 			checkedItems: new Map(),
-			search: '',	
+			search: '',
 		}
 	}
 	
@@ -75,7 +74,12 @@ export default class App extends React.Component {
 					<Grid.Column width={10}>
 						<Form>
 							<Form.Group>
-								<Form.Input size='massive' placeholder='Type to search...' style={{ width: '26em', paddingRight: '1.7em' }}/>
+								<Form.Input 
+									size='massive' 
+									placeholder='Type to search...' 
+									style={{ width: '26em', paddingRight: '1.7em' }}
+									// onChange={}
+								/>
 								<Form.Button size='massive' style={{ width: '10em'}}>Search</Form.Button>
 							</Form.Group>
 						</Form>
@@ -209,7 +213,22 @@ export default class App extends React.Component {
 					<Grid.Column width={12} style={{ padding: '3em 6em' }}>
 						<Header as='h1' style={{ fontSize: '3.4em' }}>Results</Header>
 
-						<ItemList data={items} filter={filter} />	
+						{
+							filter.length ? <ItemList data={items} filter={filter} /> :
+								items.map(item =>
+									<ItemInfo
+										key={item.id}
+										name={item.name}
+										image={item.image}
+										category={item.Electronics}
+										color={item.color}
+										rating={item.rating}
+										price={item.price}
+										itemsLeft={item.items_left}
+										description={item.description}						
+									/> 
+								)
+						}
 
 					</Grid.Column>
 				</Grid.Row>

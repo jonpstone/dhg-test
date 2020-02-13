@@ -7,7 +7,7 @@ export default class ItemList extends React.Component {
     }
 
     onFilter = (filter) => {
-        const filteredData = this.props.data.filter((item) => {
+        return this.props.data.filter((item) => {
             return filter.includes(item.category) ||
             (filter.includes('oneToFifty') && (item.items_left > 0 && item.items_left <= 50)) ||
             (filter.includes('fiftyOneToHundred') && (item.items_left > 50 && item.items_left <= 100 )) ||
@@ -20,17 +20,16 @@ export default class ItemList extends React.Component {
             (filter.includes('overThree') && (item.rating > 3)) ||
             (filter.includes('overTwo') && (item.rating > 2)) 
         })
-        console.log('NOT FILTERED', this.props.data)
-        console.log('FILTERED', filteredData)
     }
 
     render() {
         const filtered = [...new Set(this.onFilter(this.props.filter))]
+        console.log('FILTERED', filtered)
         
         return (
             <>
                 {	
-                    filtered && filtered.length ? filtered.map((item) =>
+                    filtered && filtered.length ? filtered.map(item =>
                         <ItemInfo
                             key={item.id}
                             name={item.name}
