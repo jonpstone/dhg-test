@@ -79,9 +79,9 @@ export default class App extends React.Component {
 	render() {
 		const { activeIndex, checkedItems, filter, items } = this.state
 		const filtered = [...new Set(this.onFilter(this.state.filter))]
-
+		
 		return (
-<>
+			<>
 				<Grid style={{ margin: '0' }}>
 					<Grid.Row style={{ padding: '2em 3em 1em', backgroundColor: '#0f84a8'}}>
 						<Grid.Column width={6} >
@@ -131,7 +131,6 @@ export default class App extends React.Component {
 							<Form>
 								<Form.Button
 									onClick={this.clearAll}
-									textAlign='center'
 									type='button'
 									style={{ 
 										backgroundColor: '#EEEEEE', 
@@ -272,7 +271,7 @@ export default class App extends React.Component {
 									Results
 								</Header>
 								<div style={{ fontFamily: "'Montserrat', sans-serif", fontSize: '1.2em' }}>
-									Returned {filtered.length ? filtered.length : items.length} Items
+									Returned {filtered.length ? filtered.length : (items.length ? items.length : '0')} Items
 								</div><br/>
 							</Grid.Row>
 							<Grid.Row>
@@ -281,7 +280,7 @@ export default class App extends React.Component {
 						</Grid.Column>
 					</Grid.Row>
 				</Grid>
-</>
+			</>
 		);
 	}
 }
