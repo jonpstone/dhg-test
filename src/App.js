@@ -99,7 +99,7 @@ export default class App extends React.Component {
 							</Header>
 						</Grid.Column>
 						<Grid.Column width={10} style={{ padding: '0'}}>
-							<Form style={{ marginLeft: '5em', paddingLeft: '0', marginLeft: '0' }}>
+							<Form style={{ paddingLeft: '0', marginLeft: '0' }}>
 								<Form.Group>
 									<Form.Input 
 										size='massive' 
